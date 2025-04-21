@@ -150,13 +150,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(Long document , UserRequest userDto) {
-        Optional<UserEntity> userOptional = userJpaRepository.findByNumberDoc(document);
+    public void updateUser(String id , UserRequest userDto) {
+        Optional<UserEntity> userOptional = userJpaRepository.findById(UUID.fromString(id));
         if (userOptional.isPresent()) {
             UserEntity userEntity = userOptional.get();
             modelMapper.map(userDto, userEntity);
             userEntity.setUpdatedAt(LocalDateTime.now());
             userJpaRepository.save(userEntity);
+            return;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+    }
+
+    @Override
+    public User getUserById(String id) {
+        Optional<UserEntity> userOptional = userJpaRepository.findById(UUID.fromString(id));
+        return userOptional.map(userEntity -> modelMapper.map(userEntity, User.class)).orElse(null);
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        Optional<UserEntity> userOptional = userJpaRepository.findById(UUID.fromString(id));
+        if (userOptional.isPresent()) {
+            UserEntity userEntity = userOptional.get();
+            userEntity.setUpdatedAt(LocalDateTime.now());
+            userJpaRepository.delete(userEntity);
             return;
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");

@@ -37,15 +37,27 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @PutMapping
-    public ResponseEntity<?> update(@RequestBody Long document,@RequestBody UserRequest request) {
-        userService.updateUser(document , request);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable  String id,@RequestBody UserRequest request) {
+        userService.updateUser(id , request);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/document/{document}")
     public ResponseEntity<User> getUserByNumberDoc(@PathVariable Long document) {
         return ResponseEntity.ok(userService.getUserByNumberDoc(document));
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<User> getUserById(@PathVariable String id) {
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable String id) {
+        // Cambiar por borrado logico
+        userService.deleteUser(id);
+        return ResponseEntity.ok().build();
     }
 
 }
