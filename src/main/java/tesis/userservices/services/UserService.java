@@ -26,6 +26,10 @@ public interface UserService {
 
     User getUserByNumberDoc(Long numberDoc);
 
-    void updateUser(Long document , UserRequest userDto);
+    void updateUser(String id , UserRequest userDto);
+
+    User getUserById(String id);
+
+    void deleteUser(String id);
 
 }

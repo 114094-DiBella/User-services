@@ -36,6 +36,12 @@ public class UserEntity {
     @Column
     private LocalDateTime birthday;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
