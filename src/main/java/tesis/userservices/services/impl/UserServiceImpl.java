@@ -11,6 +11,7 @@ import tesis.userservices.dtos.LoginResponse;
 import tesis.userservices.dtos.UserDto;
 import tesis.userservices.dtos.UserRequest;
 import tesis.userservices.entities.UserEntity;
+import tesis.userservices.models.Rol;
 import tesis.userservices.models.User;
 import tesis.userservices.repositories.UserJpaRepository;
 import tesis.userservices.services.UserService;
@@ -80,6 +81,10 @@ public class UserServiceImpl implements UserService {
             //    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong password");
             //}
 
+            if(!userEntity.getPassword().equals(userDto.getPassword())) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong password");
+            }
+
             String token = jwtUtil.generateToken(userEntity.getEmail());
 
             return new LoginResponse(token, "Login exitoso");
@@ -123,6 +128,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userEntity.setId(UUID.randomUUID());
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        userEntity.setRole(Rol.User);
         userEntity.setCreatedAt(LocalDateTime.now());
         userEntity.setUpdatedAt(LocalDateTime.now());
         userJpaRepository.save(userEntity);

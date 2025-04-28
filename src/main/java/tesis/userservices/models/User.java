@@ -22,6 +22,8 @@ public class User {
     private LocalDateTime birthday;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Rol role;
+    private Boolean status;
 
     public <T> User(String email, String password, List<T> roleUser) {
     }

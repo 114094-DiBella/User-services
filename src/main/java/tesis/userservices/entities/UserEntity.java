@@ -1,9 +1,7 @@
 package tesis.userservices.entities;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import tesis.userservices.models.Rol;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
@@ -43,4 +41,12 @@ public class UserEntity {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Rol role;
+
+    @Column
+    private Boolean status;
+
 }
