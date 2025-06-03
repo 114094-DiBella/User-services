@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
             String token = jwtUtil.generateToken(userEntity.getEmail());
 
-            return new LoginResponse(token, "Login exitoso");
+            return new LoginResponse(token, "Login exitoso", userEntity.getRole().name());
 
         } catch (ResponseStatusException e) {
             throw e;
@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userEntity.setId(UUID.randomUUID());
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
-        userEntity.setRole(Rol.User);
+        userEntity.setRole(Rol.USER);
         userEntity.setCreatedAt(LocalDateTime.now());
         userEntity.setUpdatedAt(LocalDateTime.now());
         userJpaRepository.save(userEntity);

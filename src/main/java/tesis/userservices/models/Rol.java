@@ -1,6 +1,6 @@
 package tesis.userservices.models;
 
 public enum Rol {
-    Admin,
-    User
+    ADMIN,  // ✅ MAYÚSCULAS CONSISTENTES
+    USER    // ✅ MAYÚSCULAS CONSISTENTES
 }
