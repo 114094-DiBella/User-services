@@ -1,0 +1,16 @@
+services:
+  userservices:
+    build: .
+    container_name: userservices-app
+    ports:
+      - "8007:8007"
+    networks:
+      - product-network  # Misma red que productos
+    environment:
+      - JAVA_OPTS=-Dfile.encoding=UTF-8 -Dproject.build.sourceEncoding=UTF-8
+    restart: on-failure
+
+# Usar la red existente del microservicio de productos
+networks:
+  product-network:
+    external: true
