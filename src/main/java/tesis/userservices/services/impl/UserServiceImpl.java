@@ -127,7 +127,8 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userEntity.setId(UUID.randomUUID());
-        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        //userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        userEntity.setPassword(user.getPassword());
         userEntity.setRole(Rol.USER);
         userEntity.setCreatedAt(LocalDateTime.now());
         userEntity.setUpdatedAt(LocalDateTime.now());
@@ -141,7 +142,8 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> userOptional = userJpaRepository.findByEmail(userDto.getEmail());
         if (userOptional.isPresent()) {
             UserEntity userEntity = userOptional.get();
-            userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            userEntity.setPassword(userDto.getPassword());
+            //userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
             userEntity.setUpdatedAt(LocalDateTime.now());
             userJpaRepository.save(userEntity);
             return modelMapper.map(userEntity, User.class);
